@@ -1,5 +1,10 @@
 # 🎯 Naive Bayes Visualizer
 
+[NAIVE BAYES VISUALISER](https://hammadshakeelai.github.io/Visualizers/)
+
+[CLOCK WEBSITE](https://hammadshakeelai.github.io/Visualizers/timezone-clock.html0)
+
+
 An interactive web-based visualizer for the **Gaussian Naive Bayes** classifier. Explore how the algorithm learns decision boundaries from data, view probability distributions in real time, and build intuition for Bayesian classification — all in your browser.
 
 ![Naive Bayes Visualizer](https://img.shields.io/badge/ML-Naive%20Bayes-6366f1?style=for-the-badge) ![Status](https://img.shields.io/badge/Status-Live-34d399?style=for-the-badge) ![License](https://img.shields.io/badge/License-MIT-f472b6?style=for-the-badge)
