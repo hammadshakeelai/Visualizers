@@ -3,31 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Timezone Clock</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-        .clock { font-size: 24px; margin: 20px; }
-    </style>
+    <title>Multi-Timezone Digital Clock</title>
+    <link rel="stylesheet" href="timezone-clock.css">
 </head>
 <body>
-    <h1>Current Time in Multiple Time Zones</h1>
-    <div class="clock" id="utc-clock"></div>
-    <div class="clock" id="est-clock"></div>
-    <div class="clock" id="pst-clock"></div>
+    <div class="container">
+        <h1>⏰ Global Time Zones</h1>
+        
+        <div class="controls">
+            <button id="add-timezone-btn" class="btn btn-add">+ Add Time Zone</button>
+            <button id="reset-btn" class="btn btn-reset">Reset</button>
+        </div>
 
-    <script>
-        function updateClocks() {
-            const now = new Date();
-            const utc = now.toUTCString();
-            const est = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' })).toLocaleString();
-            const pst = new Date(now.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })).toLocaleString();
-            
-            document.getElementById('utc-clock').innerText = 'UTC: ' + utc;
-            document.getElementById('est-clock').innerText = 'EST: ' + est;
-            document.getElementById('pst-clock').innerText = 'PST: ' + pst;
-        }
-        updateClocks();
-        setInterval(updateClocks, 1000);
-    </script>
+        <div class="timezone-modal" id="timezone-modal">
+            <div class="modal-content">
+                <h2>Add Time Zone</h2>
+                <input type="text" id="timezone-search" placeholder="Search timezone (e.g., New York, London)...">
+                <div class="timezone-list" id="timezone-list"></div>
+                <button class="btn btn-cancel" id="modal-close">Close</button>
+            </div>
+        </div>
+
+        <div class="clocks-container" id="clocks-container">
+            <!-- Clocks will be added here dynamically -->
+        </div>
+    </div>
+
+    <script src="timezone-clock.js"></script>
 </body>
 </html>
