@@ -4,6 +4,8 @@
 
 [CLOCK WEBSITE](https://hammadshakeelai.github.io/Visualizers/timezone-clock.html)
 
+[TRANSFORMER VISUALIZER (NEW)](https://hammadshakeelai.github.io/Visualizers/transformer-visualizer/)
+
 
 An interactive web-based visualizer for the **Gaussian Naive Bayes** classifier. Explore how the algorithm learns decision boundaries from data, view probability distributions in real time, and build intuition for Bayesian classification — all in your browser.
 
