@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Transformer Visualizer and Simulator for beginner and advanced students.">
+    <title>Transformer Visualizer and Simulator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="ambient-bg" aria-hidden="true">
+        <div class="ambient-orb orb-1"></div>
+        <div class="ambient-orb orb-2"></div>
+        <div class="ambient-orb orb-3"></div>
+    </div>
+    <header class="top-bar">
+        <div>
+            <h1>Transformer Visualizer <span>Deep Learning Explorer</span></h1>
+            <p>Interactive visualizer, simulator, and teaching emulator for self-attention and encoder stacks.</p>
+        </div>
+        <div class="header-actions">
+            <button id="open-guide-btn" class="ghost-btn">Quick Guide</button>
+            <a class="back-link" href="../index.html">Back to Visualizers</a>
+        </div>
+    </header>
+
+    <main class="layout">
+        <aside class="panel controls">
+            <h2>Learning Modes</h2>
+            <label for="lesson-select">Lesson Preset</label>
+            <select id="lesson-select"></select>
+
+            <label for="layer-range">Layer</label>
+            <input id="layer-range" type="range" min="0" max="5" value="0">
+            <div id="layer-label" class="mono">Layer 0</div>
+
+            <label for="head-range">Attention Head</label>
+            <input id="head-range" type="range" min="0" max="3" value="0">
+            <div id="head-label" class="mono">Head 0</div>
+
+            <label for="token-range">Focus Token</label>
+            <input id="token-range" type="range" min="0" max="0" value="0">
+            <div id="token-label" class="mono">Token 0</div>
+
+            <label for="mask-select">Attention Mask</label>
+            <select id="mask-select">
+                <option value="none">None (bidirectional)</option>
+                <option value="causal">Causal (autoregressive)</option>
+            </select>
+
+            <label for="temperature-range">Softmax Temperature</label>
+            <input id="temperature-range" type="range" min="0.5" max="2" step="0.05" value="1">
+            <div id="temperature-label" class="mono">Temperature 1.00</div>
+
+            <div class="button-row">
+                <button id="run-btn">Run Full Pass</button>
+                <button id="step-btn">Step</button>
+                <button id="reset-btn">Reset</button>
+            </div>
+            <div class="button-row">
+                <button id="save-state-btn">Save State</button>
+                <button id="load-state-btn">Load State</button>
+                <button id="export-json-btn">Export JSON</button>
+            </div>
+
+            <h3>Visualization Mode</h3>
+            <select id="view-select">
+                <option value="matrix">Attention Matrix</option>
+                <option value="focus">Focus Distribution</option>
+            </select>
+
+            <h3>Shortcuts</h3>
+            <ul class="shortcut-list">
+                <li><code>R</code> run full pass</li>
+                <li><code>S</code> step one layer</li>
+                <li><code>[</code> / <code>]</code> layer down/up</li>
+                <li><code>H</code> toggle hints</li>
+            </ul>
+
+            <h3>What to Observe</h3>
+            <ul id="teaching-notes" aria-live="polite"></ul>
+        </aside>
+
+        <section class="panel stage">
+            <div class="stage-toolbar">
+                <button id="play-btn">Play Layers</button>
+                <button id="pause-btn">Pause</button>
+                <label for="playback-speed-select">Speed</label>
+                <select id="playback-speed-select">
+                    <option value="1300">Slow</option>
+                    <option value="850" selected>Normal</option>
+                    <option value="450">Fast</option>
+                </select>
+            </div>
+            <div class="module-grid" id="module-grid"></div>
+            <div class="token-row" id="token-row"></div>
+            <canvas id="attention-canvas" width="640" height="380" aria-label="Transformer attention visualization canvas"></canvas>
+            <div class="legend">
+                <span><i class="dot hot"></i>High weight</span>
+                <span><i class="dot mid"></i>Medium weight</span>
+                <span><i class="dot low"></i>Low weight</span>
+            </div>
+        </section>
+
+        <aside class="panel analytics">
+            <h2>Deep Dive</h2>
+            <div id="focus-summary"></div>
+            <h3>Head Comparison</h3>
+            <div id="head-compare"></div>
+            <h3>Computation Trace</h3>
+            <pre id="trace-box" class="mono"></pre>
+            <h3>Equation Lens</h3>
+            <pre id="equation-box" class="mono"></pre>
+            <h3>Per-Head Statistics</h3>
+            <div id="head-stats"></div>
+            <h3>Validation</h3>
+            <div id="validation-box"></div>
+            <h3>Guided Quiz</h3>
+            <div id="quiz-box"></div>
+            <div id="quiz-controls" class="button-row">
+                <button id="quiz-submit-btn">Submit Answer</button>
+                <button id="quiz-next-btn">Next Question</button>
+            </div>
+            <div id="quiz-feedback"></div>
+            <h3>Progress</h3>
+            <div id="progress-box"></div>
+        </aside>
+    </main>
+
+    <div id="guide-modal" class="guide-modal hidden">
+        <div class="guide-card">
+            <h2>How to Use This Visualizer</h2>
+            <ol>
+                <li>Pick a lesson and click <strong>Run Full Pass</strong> for full encoder simulation.</li>
+                <li>Use layer/head/token sliders to inspect behavior at each step.</li>
+                <li>Switch between matrix and focus modes to compare attention patterns.</li>
+                <li>Use <strong>Play Layers</strong> for animated walkthrough and hover cells for explanations.</li>
+            </ol>
+            <button id="close-guide-btn">Start Exploring</button>
+        </div>
+    </div>
+
+    <div id="tooltip" class="tooltip hidden"></div>
+
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
